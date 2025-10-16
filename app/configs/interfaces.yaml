@@ -1,0 +1,38 @@
+interfaces:
+  user_orders:
+    sql_template_file: "user_orders.sql"
+    required_fields: []  # 必填字段列表，用于完整性校验
+    preview_fields: []  # 预览显示字段列表（空则返回所有）
+    batch_size: 10  # 批量上传大小
+    upload_url: "https://external-project.com/api/v1/user_orders"  # 外部上传接口地址
+    headers:  # 请求头（支持加密/认证）
+      Authorization: "Bearer your_token_here"
+      Content-Type: "application/json"
+      X-Version: "1.0"
+    interval: 10  # 自动上传循环间隔（秒），0 表示手动
+    query_params:  # 自定义查询参数定义（用于预览/上传过滤）
+      - name: name
+        type: str
+        default: ""
+        required: false
+        description: "名称模糊查询"
+      - name: filter_date
+        type: date
+        default: "2025-10-16"  # 当前日期示例
+        required: false
+        description: "日期过滤，格式 YYYY-MM-DD"
+      - name: page
+        type: int
+        default: 1
+        required: false
+        description: "分页页码"
+      - name: limit
+        type: int
+        default: 50
+        required: false
+        description: "每页条数"
+  # 示例：加新类型接口
+  # another_orders:
+  #   sql_template_file: "another_orders.sql"
+  #   required_fields: ["id", "amount"]
+  #   # ... 类似配置

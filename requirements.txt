@@ -1,0 +1,7 @@
+dmPython
+fastapi
+uvicorn
+pyyaml
+jinja2
+python-dotenv
+pydantic
