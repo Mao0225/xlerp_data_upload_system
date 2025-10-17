@@ -1,7 +1,11 @@
-dmPython
-fastapi
-uvicorn
-pyyaml
-jinja2
-python-dotenv
-pydantic
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+dmPython  # DM 驱动 (达梦官网下载安装)
+pyyaml==6.0.1
+jinja2==3.1.2
+httpx==0.25.2
+cryptography==41.0.7  # 加密
+pydantic==2.5.0
+python-dotenv==1.0.0
+apscheduler==3.10.4  # 任务调度
+redis==5.0.1  # 状态管理 (可选)
