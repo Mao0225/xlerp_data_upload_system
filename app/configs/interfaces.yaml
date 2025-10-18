@@ -5,10 +5,14 @@ interfaces:
     preview_fields: []  # 预览显示字段列表（空则返回所有）
     batch_size: 10  # 批量上传大小
     upload_url: "https://external-project.com/api/v1/user_orders"  # 外部上传接口地址
+    description: "测试接口" # 接口描述
     headers:  # 请求头（支持加密/认证）
       Authorization: "Bearer your_token_here"
       Content-Type: "application/json"
       X-Version: "1.0"
+      orisys: "orisys" #调用方 erp要求
+      transno: "transno"#全局交易流水号 erp要求
+      operatetype: "operatetype"#操作类型 erp要求
     interval: 10  # 自动上传循环间隔（秒），0 表示手动
     query_params:  # 自定义查询参数定义（用于预览/上传过滤）
       - name: name

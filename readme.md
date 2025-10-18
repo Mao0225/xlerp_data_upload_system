@@ -184,7 +184,7 @@ interfaces:
   # 加新接口：复制块，改 ID + sql_template_file
 ```
 
-### sql_templates/ 示例 (user_orders.sql)
+### sql_templates/ 示例 (user_orders.sql) ---jinja格式
 ```
 SELECT u.id AS api_user_id, u.name AS api_username, o.total AS api_amount
 FROM users u JOIN orders o ON u.id = o.user_id
@@ -196,8 +196,7 @@ LIMIT {{ limit }} OFFSET {{ offset }}
 ```
 - **Jinja 支持**：`{{ param }}` 替换、`{% if param != '' %}` 条件。
 
-## API 端点
-
+## API 可视化网页
 Swagger UI：http://localhost:8000/docs (交互测试，点击 Execute)。
 
 ### 预览端点 (/v1/preview)
@@ -213,7 +212,7 @@ Swagger UI：http://localhost:8000/docs (交互测试，点击 Execute)。
   - 返回：{"status": "stopped"}。
 - **GET /v1/tasks/{task_id}/status**：查看状态。
   - 返回：{"status": "running/idle/stopped", "last_run": str, "errors": int}。
-- **GET /v1/tasks/**：列表所有任务。
+- **GET /v1/tasks/ListAllTask**：列表所有任务以及状态。
   - 返回：{"tasks": ["user_orders", ...], "total": int}。
 
 ## 开发与维护
@@ -227,16 +226,6 @@ Swagger UI：http://localhost:8000/docs (交互测试，点击 Execute)。
 ### 自动上传机制
 - 启动后：每 interval 秒执行 runner (查询 + 上传 + 状态更新)。
 - 失败处理：日志错误，errors 计数 >3 自动 stop，回滚 DB 事务 (dmPython rollback)。
-
-### 测试
-- **API 测试**：Swagger Execute 或 Postman (预览/任务控制)。
-- **循环测试**：启动任务，查日志/状态，模拟外部 URL (用 httpbin.org 测试 POST)。
-- **单元测试** (可选，tests/ 目录)：
-  ```
-  pip install pytest
-  pytest tests/test_preview.py  # SQL 渲染/查询
-  pytest tests/test_uploader.py  # 上传模拟
-  ```
 
 ## 故障排除
 

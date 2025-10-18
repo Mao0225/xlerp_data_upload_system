@@ -60,3 +60,22 @@ def execute_query(sql: str):
         rows = cursor.fetchall()
         # 将每行数据与列名组合成字典，最终返回字典列表
         return [dict(zip(columns, row)) for row in rows]
+
+
+def execute_insert(sql: str, params: tuple = None) -> int:
+    """
+    执行INSERT SQL语句并返回受影响的行数（支持参数化查询）
+
+    参数:
+        sql: 要执行的INSERT SQL语句（使用 ? 作为占位符）
+        params: 参数元组（可选，默认 None），对应 SQL 中的占位符
+
+    返回:
+        int: 受影响的行数（通常为插入的行数）
+    """
+    # 使用数据库连接上下文管理器获取游标
+    with get_db() as cursor:
+        # 执行SQL语句（支持参数化）
+        cursor.execute(sql, params or ())
+        # 获取受影响的行数
+        return cursor.rowcount

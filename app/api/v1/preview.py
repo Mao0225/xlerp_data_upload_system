@@ -9,7 +9,7 @@ from pydantic import BaseModel, ValidationError
 
 configs = load_configs()["interfaces"]
 
-router = APIRouter()
+router = APIRouter(prefix="/preview", tags=["preview data"])  # tags 便于 Swagger 分组
 
 
 def validate_dynamic_params(query_params: Dict[str, Any], interface_name: str) -> Dict[str, Any]:
@@ -45,7 +45,7 @@ def validate_dynamic_params(query_params: Dict[str, Any], interface_name: str) -
     return {}
 
 
-@router.get("/preview/{interface_name}")
+@router.get("/{interface_name}",summary="预览上传数据列表接口")
 async def preview_interface(
         request: Request,  # 用于动态参数
         interface_name: str,
